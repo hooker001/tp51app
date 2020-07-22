@@ -10,3 +10,12 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+function jsonSuc($data = [], $status = 1)
+{
+    return json(['status' => $status, 'data' => $data, 'msg' => '']);
+}
+
+function jsonErr($msg = '', $status = 0)
+{
+    return json(['status' => $status, 'data' => [], 'msg' => $msg]);
+}
