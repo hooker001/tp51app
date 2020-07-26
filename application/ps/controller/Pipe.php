@@ -51,4 +51,12 @@ class Pipe extends Controller
         }
         return jsonSuc($pipe->toArray());
     }
+
+    public function lists()
+    {
+        $arrCond = $this->request->get();
+        $model = new Mdl();
+        $arrRe = $model->lists($arrCond);
+        return jsonSuc($arrRe);
+    }
 }

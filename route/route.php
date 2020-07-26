@@ -22,6 +22,7 @@ Route::group('ps', function () {
     Route::post('pipe/create', 'ps/pipe/create');
     Route::post('pipe/delete', 'ps/pipe/delete');
     Route::get('pipe/info', 'ps/pipe/info');
+    Route::get('pipe/lists', 'ps/pipe/lists');
     Route::post('canal/create', 'ps/canal/create');
     Route::post('canal/delete', 'ps/canal/delete');
     Route::post('dirpoint/create', 'ps/dirpoint/create');

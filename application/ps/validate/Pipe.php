@@ -39,6 +39,10 @@ class Pipe extends Validate
         'repair_date' => 'require|date',
         'repair_company' => 'require|max:50',
         'data_origin' => 'require|max:50',
+        'river' => 'require|max:10',
+        'serv' => 'require|max:50',
+        'lng' => 'require|float',
+        'lat' => 'require|float',
         'remark' => 'max:255',
     ];
 
