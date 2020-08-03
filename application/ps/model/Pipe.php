@@ -6,6 +6,8 @@ use think\Model;
 
 class Pipe extends Model
 {
+    protected $pk = 'gid';
+
     protected $table = 'ps_pipe_zy';
 
     public function lists($arrParam)
