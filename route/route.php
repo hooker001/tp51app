@@ -19,10 +19,12 @@ use think\facade\Route;
 Route::group('ps', function () {
     Route::get('home', 'ps/index/home');
     Route::get('info', 'ps/index/info');
+    Route::get('search', 'ps/index/search');
+    Route::get('pdf', 'ps/index/pdf');
     Route::post('pipe/create', 'ps/pipe/create');
     Route::post('pipe/delete', 'ps/pipe/delete');
     Route::get('pipe/info', 'ps/pipe/info');
-    Route::get('pipe/lists', 'ps/pipe/lists');
+//    Route::get('pipe/lists', 'ps/pipe/lists');
     Route::post('canal/create', 'ps/canal/create');
     Route::post('canal/delete', 'ps/canal/delete');
     Route::get('canal/info', 'ps/canal/info');
