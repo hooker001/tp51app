@@ -45,7 +45,7 @@ Route::group('ps', function () {
 //    Route::post('prepro/create', 'ps/prepro/create');
 //    Route::post('prepro/delete', 'ps/prepro/delete');
 //    Route::get('prepro/info', 'ps/prepro/info');
-})->crossDomainRule();
+})->allowCrossDomain();
 
 Route::miss('ps/index/info');
 
