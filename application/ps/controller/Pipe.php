@@ -44,7 +44,7 @@ class Pipe extends Controller
             return jsonErr('数据不存在');
         }
         $pipe->delete();
-        return jsonSuc();
+        return jsonSuc(['id' => $id]);
     }
 
     public function info()

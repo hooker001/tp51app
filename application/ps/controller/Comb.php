@@ -33,7 +33,7 @@ class Comb extends Controller
 //        $model->save(['usid' => $usid, 'geom' => 'st_geomfromgeojson(' . $geom . ')'], ['gid' => $id]);
         $sql = "update ps_comb_zy set geom=st_geomfromgeojson('$geom') where gid=" . $id;
         Db::execute($sql);
-        return jsonSuc();
+        return jsonSuc(['id' => $id]);
     }
 
     public function delete()

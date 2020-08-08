@@ -32,7 +32,7 @@ class Spout extends Controller
 //        $usid .= $strId;
         $sql = "update ps_spout_zy set geom=st_geomfromgeojson('$geom') where gid=" . $id;
         Db::execute($sql);
-        return jsonSuc();
+        return jsonSuc(['id' => $id]);
     }
 
     public function delete()
