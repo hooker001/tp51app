@@ -18,16 +18,16 @@ class Canal extends Controller
         if (!$validate->check($arrPost)) {
             return jsonErr($validate->getError());
         }
-        $usid = $this->fcode . '-' . $arrPost['code'] . '-';
+//        $usid = $this->fcode . '-' . $arrPost['code'] . '-';
         $geom = $arrPost['geom'];
-        unset($arrPost['code'], $arrPost['geom']);
-        $arrPost['fcode'] = $this->fcode;
+        unset($arrPost['geom']);
+//        $arrPost['fcode'] = $this->fcode;
         $model = new Mdl();
         $model->save($arrPost);
         $id = $model->gid;
-        $strId = str_pad($id, 6, '0', STR_PAD_LEFT);
-        $usid .= $strId;
-        $sql = "update ps_canal_zy set geom=st_geomfromgeojson('$geom'),usid='$usid' where gid=" . $id;
+//        $strId = str_pad($id, 6, '0', STR_PAD_LEFT);
+//        $usid .= $strId;
+        $sql = "update ps_canal_zy set geom=st_geomfromgeojson('$geom') where gid=" . $id;
         Db::execute($sql);
         return jsonSuc();
     }
@@ -62,10 +62,10 @@ class Canal extends Controller
         }
         $arrPost = $this->request->post();
         $data = $arrPost;
-        if (isset($arrPost['code']) && $arrPost['code']) {
-            $data['usid'] = $this->fcode . '-' . $arrPost['code'] . '-' . str_pad($id, 6, '0', STR_PAD_LEFT);
-            unset($data['code']);
-        }
+//        if (isset($arrPost['code']) && $arrPost['code']) {
+//            $data['usid'] = $this->fcode . '-' . $arrPost['code'] . '-' . str_pad($id, 6, '0', STR_PAD_LEFT);
+//            unset($data['code']);
+//        }
         $geom = '';
         if (isset($arrPost['geom']) && $arrPost['geom']) {
             $geom = $arrPost['geom'];

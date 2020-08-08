@@ -7,7 +7,8 @@ use think\Validate;
 class Canal extends Validate
 {
     protected $rule = [
-        'code' => 'require|length:8',
+        'fcode' => 'require',
+        'usid' => 'require',
         'name' => 'require|max:50',
         'work_id' => 'require|max:30',
         'project_na' => 'require|max:50',
