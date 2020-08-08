@@ -19,7 +19,7 @@ class Well extends Controller
             return jsonErr($validate->getError());
         }
 //        $usid = $this->fcode . '-' . $arrPost['code'] . '-';
-        $geom = $arrPost['geom'];
+        $geom = $arrPost['geom'] ?? '';
         unset($arrPost['geom']);
 //        $arrPost['fcode'] = $this->fcode;
         $model = new Mdl();
