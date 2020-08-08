@@ -38,5 +38,6 @@ class Spout extends Validate
         'parentid' => 'require',
         'tc' => 'require',
         'geom' => 'require',
+        'srv'=>'require',
     ];
 }

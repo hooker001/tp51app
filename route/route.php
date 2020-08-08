@@ -45,6 +45,12 @@ Route::group('ps', function () {
 //    Route::post('prepro/create', 'ps/prepro/create');
 //    Route::post('prepro/delete', 'ps/prepro/delete');
 //    Route::get('prepro/info', 'ps/prepro/info');
+    Route::post('canel/update', 'ps/canal/update');
+    Route::post('comb/update', 'ps/comb/update');
+    Route::post('dirpoint/update', 'ps/dirpoint/update');
+    Route::post('pipe/update', 'ps/pipe/update');
+    Route::post('spout/update', 'ps/spout/update');
+    Route::post('well/update', 'ps/well/update');
 })->allowCrossDomain();
 
 Route::miss('ps/index/info');

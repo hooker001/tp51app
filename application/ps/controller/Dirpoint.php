@@ -52,4 +52,31 @@ class Dirpoint extends Controller
         }
         return jsonSuc($info->toArray());
     }
+
+    public function update()
+    {
+        $id = intval($this->request->get('id'));
+        $info = Mdl::get($id);
+        if (!$info) {
+            return jsonErr('数据不存在');
+        }
+        $arrPost = $this->request->post();
+        $data = $arrPost;
+        if (isset($arrPost['code']) && $arrPost['code']) {
+            $data['usid'] = $this->fcode . '-' . $arrPost['code'] . '-' . str_pad($id, 6, '0', STR_PAD_LEFT);
+            unset($data['code']);
+        }
+        $geom = '';
+        if (isset($arrPost['geom']) && $arrPost['geom']) {
+            $geom = $arrPost['geom'];
+            unset($data['geom']);
+        }
+        $mdl = new Mdl();
+        $mdl->save($data, ['gid' => $id]);
+        if ($geom) {
+            $sql = "update ps_dir_point_zy set geom=st_geomfromgeojson('$geom') where gid=" . $id;
+            Db::execute($sql);
+        }
+        return jsonSuc();
+    }
 }

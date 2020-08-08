@@ -49,5 +49,6 @@ class Canal extends Validate
         'l' => 'require',
         'tc' => 'require',
         'geom' => 'require',
+        'srv'=>'require',
     ];
 }

@@ -12,7 +12,7 @@ class Comb extends Model
 
     public function getAll($arrCond)
     {
-        $allowField = ['district', 'subtype', 'lane_way'];
+        $allowField = ['district', 'subtype', 'lane_way', 'srv'];
         $arrParam = array_intersect_key($arrCond, array_flip($allowField));
         if (!$arrParam || count($arrCond) > count($arrParam)) {
             return [];
@@ -27,6 +27,9 @@ class Comb extends Model
         }
         if (isset($arrParam['lane_way']) && $arrParam['lane_way']) {
             $model = $model->where('lane_way', 'like', '%' . $arrParam['lane_way'] . '%');
+        }
+        if (isset($arrParam['srv']) && $arrParam['srv']) {
+            $model = $model->where('srv', 'like', '%' . $arrParam['srv'] . '%');
         }
         return $model->order('gid', 'desc')->select()->toArray();
     }

@@ -48,6 +48,7 @@ class Pipe extends Validate
         'l' => 'require',
         'tc' => 'require',
         'geom' => 'require',
+        'srv'=>'require',
     ];
 
     protected $message = [
