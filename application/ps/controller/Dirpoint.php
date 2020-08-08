@@ -27,7 +27,7 @@ class Dirpoint extends Controller
 //        $arrPost['fcode'] = $this->fcode;
         $model = new Mdl();
         $model->save($arrPost);
-        $id = $model->id;
+        $id = $model->gid;
 //        $strId = str_pad($id, 6, '0', STR_PAD_LEFT);
 //        $usid .= $strId;
         $sql = "update ps_dir_point_zy set geom=st_geomfromgeojson('$geom') where gid=" . $id;
