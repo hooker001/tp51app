@@ -14,6 +14,9 @@ class Dirpoint extends Controller
     public function create()
     {
         $arrPost = $this->request->post();
+        if (!$arrPost) {
+            return jsonErr('缺失入参');
+        }
 //        $validate = new Vd();
 //        if (!$validate->check($arrPost)) {
 //            return jsonErr($validate->getError());

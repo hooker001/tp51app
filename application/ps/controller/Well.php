@@ -14,10 +14,13 @@ class Well extends Controller
     public function create()
     {
         $arrPost = $this->request->post();
-        $validate = new Vd();
-        if (!$validate->check($arrPost)) {
-            return jsonErr($validate->getError());
+        if (!$arrPost) {
+            return jsonErr('缺失入参');
         }
+//        $validate = new Vd();
+//        if (!$validate->check($arrPost)) {
+//            return jsonErr($validate->getError());
+//        }
 //        $usid = $this->fcode . '-' . $arrPost['code'] . '-';
         $geom = $arrPost['geom'] ?? '';
         unset($arrPost['geom']);
