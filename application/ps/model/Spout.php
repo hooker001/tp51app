@@ -12,7 +12,7 @@ class Spout extends Model
 
     public function getAll($arrCond)
     {
-        $allowField = ['district', 'river', 'lane_way', 'sort', 'srv'];
+        $allowField = ['district', 'river', 'lane_way', 'sort', 'srv', 'geom'];
         $arrParam = array_intersect_key($arrCond, array_flip($allowField));
         if (!$arrParam || count($arrCond) > count($arrParam)) {
             return [];
@@ -33,6 +33,9 @@ class Spout extends Model
         }
         if (isset($arrParam['srv']) && $arrParam['srv']) {
             $model = $model->where('srv', 'like', '%' . $arrParam['srv'] . '%');
+        }
+        if (isset($arrParam['geom']) && $arrParam['geom']) {
+            $model = $model->where("st_contains(st_geomfromgeojson('".$arrParam['geom']."'),geom)");
         }
         return $model->order('gid', 'desc')->select()->toArray();
     }

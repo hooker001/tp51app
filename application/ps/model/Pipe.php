@@ -12,7 +12,7 @@ class Pipe extends Model
 
     public function getAll($arrCond)
     {
-        $allowField = ['district', 'subtype', 'material', 'd_s', 'lane_way', 'grade', 'sort', 'srv'];
+        $allowField = ['district', 'subtype', 'material', 'd_s', 'lane_way', 'grade', 'sort', 'srv', 'geom'];
         $arrParam = array_intersect_key($arrCond, array_flip($allowField));
         if (!$arrParam || count($arrCond) > count($arrParam)) {
             return [];
@@ -42,6 +42,9 @@ class Pipe extends Model
         }
         if (isset($arrParam['srv']) && $arrParam['srv']) {
             $model = $model->where('srv', 'like', '%' . $arrParam['srv'] . '%');
+        }
+        if (isset($arrParam['geom']) && $arrParam['geom']) {
+            $model = $model->where("st_contains(st_geomfromgeojson('".$arrParam['geom']."'),geom)");
         }
         return $model->order('gid', 'desc')->select()->toArray();
     }
