@@ -12,9 +12,12 @@ class Canal extends Model
 
     public function getAll($arrCond)
     {
-        $allowField = ['district', 'subtype', 'lane_way', 'grade', 'sort', 'srv', 'geom'];
+        $allowField = ['district', 'subtype', 'lane_way', 'grade', 'sort', 'srv', 'geom', 'type'];
         $arrParam = array_intersect_key($arrCond, array_flip($allowField));
         if (!$arrParam || count($arrCond) > count($arrParam)) {
+            return [];
+        }
+        if (isset($arrParam['type']) && !in_array(1, $arrParam['type'])) {
             return [];
         }
         $model = new self();

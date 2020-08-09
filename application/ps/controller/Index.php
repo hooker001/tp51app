@@ -20,6 +20,9 @@ class Index extends Controller
     public function search()
     {
         $arrParam = $this->request->get();
+        if (isset($arrParam['type']) && is_string($arrParam['type'])) {
+            $arrParam['type'] = explode(',', $arrParam['type']);
+        }
         $canalMdl = new \app\ps\model\Canal();
         $arrCanal = $canalMdl->getAll($arrParam);
         $combMdl = new \app\ps\model\Comb();

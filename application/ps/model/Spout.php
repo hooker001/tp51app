@@ -12,9 +12,12 @@ class Spout extends Model
 
     public function getAll($arrCond)
     {
-        $allowField = ['district', 'river', 'lane_way', 'sort', 'srv', 'geom'];
+        $allowField = ['district', 'river', 'lane_way', 'sort', 'srv', 'geom', 'type'];
         $arrParam = array_intersect_key($arrCond, array_flip($allowField));
         if (!$arrParam || count($arrCond) > count($arrParam)) {
+            return [];
+        }
+        if (isset($arrParam['type']) && !in_array(5, $arrParam['type'])) {
             return [];
         }
         $model = new self();
