@@ -18,7 +18,7 @@ class Canal extends Model
             return [];
         }
         $model = new self();
-        $model = $model->field('gid, st_asgeojson(geom) as geom');
+        $model = $model->field('gid, layers, st_asgeojson(geom) as geom');
         if (isset($arrParam['district']) && $arrParam['district']) {
             $model = $model->where('district', 'in', $arrParam['district']);
         }
