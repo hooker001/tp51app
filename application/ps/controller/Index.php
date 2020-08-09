@@ -21,28 +21,45 @@ class Index extends Controller
     public function search()
     {
         $arrParam = $this->request->get();
+        $type = [];
         if (isset($arrParam['type']) && is_string($arrParam['type'])) {
-            $arrParam['type'] = explode(',', $arrParam['type']);
+            $type = explode(',', $arrParam['type']);
         }
-        $canalMdl = new \app\ps\model\Canal();
-        $arrCanal = $canalMdl->getAll($arrParam);
-        $combMdl = new \app\ps\model\Comb();
-        $arrComb = $combMdl->getAll($arrParam);
-        $dirpointMdl = new \app\ps\model\Dirpoint();
-        $arrDp = $dirpointMdl->getAll($arrParam);
-        $pipeMdl = new \app\ps\model\Pipe();
-        $arrPipe = $pipeMdl->getAll($arrParam);
-        $spoutMdl = new \app\ps\model\Spout();
-        $arrSpout = $spoutMdl->getAll($arrParam);
-        $wellMdl = new \app\ps\model\Well();
-        $arrWell = $wellMdl->getAll($arrParam);
+        unset($arrParam['type']);
+        if (isset($arrParam['option']) && is_string($arrParam['option'])) {
+            $arrParam['option'] = json_decode($arrParam['option'], true);
+        }
+        if (in_array(1, $type)) {
+            $canalMdl = new \app\ps\model\Canal();
+            $arrCanal = $canalMdl->getAll($arrParam);
+        }
+        if (in_array(2, $type)) {
+            $combMdl = new \app\ps\model\Comb();
+            $arrComb = $combMdl->getAll($arrParam);
+        }
+        if (in_array(3, $type)) {
+            $dirpointMdl = new \app\ps\model\Dirpoint();
+            $arrDp = $dirpointMdl->getAll($arrParam);
+        }
+        if (in_array(4, $type)) {
+            $pipeMdl = new \app\ps\model\Pipe();
+            $arrPipe = $pipeMdl->getAll($arrParam);
+        }
+        if (in_array(5, $type)) {
+            $spoutMdl = new \app\ps\model\Spout();
+            $arrSpout = $spoutMdl->getAll($arrParam);
+        }
+        if (in_array(6, $type)) {
+            $wellMdl = new \app\ps\model\Well();
+            $arrWell = $wellMdl->getAll($arrParam);
+        }
         $arrData = [
-            'canal' => $arrCanal,
-            'comb' => $arrComb,
-            'dir_point' => $arrDp,
-            'pipe' => $arrPipe,
-            'spout' => $arrSpout,
-            'well' => $arrWell,
+            'canal' => $arrCanal ?? [],
+            'comb' => $arrComb ?? [],
+            'dir_point' => $arrDp ?? [],
+            'pipe' => $arrPipe ?? [],
+            'spout' => $arrSpout ?? [],
+            'well' => $arrWell ?? [],
         ];
         return jsonSuc($arrData);
     }
@@ -223,6 +240,74 @@ class Index extends Controller
         return jsonSuc($arrData);
     }
 
+    public function laneway()
+    {
+        $arrParam = $this->request->get();
+        $arrData = [];
+        if (isset($arrParam['type']) && $arrParam['type']) {
+            $arrType = explode(',', $arrParam['type']);
+            if (in_array(1, $arrType)) {
+                $arrRe = $this->_canal_lanway();
+                $arrData = array_merge($arrData, array_column($arrRe, 'lane_way'));
+            }
+            if (in_array(2, $arrType)) {
+                $arrRe = $this->_comb_lanway();
+                $arrData = array_merge($arrData, array_column($arrRe, 'lane_way'));
+            }
+            if (in_array(3, $arrType)) {
+                $arrRe = $this->_dir_point_lanway();
+                $arrData = array_merge($arrData, array_column($arrRe, 'lane_way'));
+            }
+            if (in_array(4, $arrType)) {
+                $arrRe = $this->_pipe_lanway();
+                $arrData = array_merge($arrData, array_column($arrRe, 'lane_way'));
+            }
+            if (in_array(5, $arrType)) {
+                $arrRe = $this->_spout_lanway();
+                $arrData = array_merge($arrData, array_column($arrRe, 'lane_way'));
+            }
+            if (in_array(6, $arrType)) {
+                $arrRe = $this->_well_lanway();
+                $arrData = array_merge($arrData, array_column($arrRe, 'lane_way'));
+            }
+        }
+        return jsonSuc(array_values(array_unique($arrData)));
+    }
+
+    public function field()
+    {
+        $arrParam = $this->request->get();
+        $arrData = [];
+        if (isset($arrParam['type']) && $arrParam['type']) {
+            $arrType = explode(',', $arrParam['type']);
+            if (in_array(1, $arrType)) {
+                $arrRe = $this->_canal_field();
+                $arrData = array_merge($arrData, $arrRe);
+            }
+            if (in_array(2, $arrType)) {
+                $arrRe = $this->_comb_field();
+                $arrData = array_merge($arrData, $arrRe);
+            }
+            if (in_array(3, $arrType)) {
+                $arrRe = $this->_dir_point_field();
+                $arrData = array_merge($arrData, $arrRe);
+            }
+            if (in_array(4, $arrType)) {
+                $arrRe = $this->_pipe_field();
+                $arrData = array_merge($arrData, $arrRe);
+            }
+            if (in_array(5, $arrType)) {
+                $arrRe = $this->_spout_field();
+                $arrData = array_merge($arrData, $arrRe);
+            }
+            if (in_array(6, $arrType)) {
+                $arrRe = $this->_well_field();
+                $arrData = array_merge($arrData, $arrRe);
+            }
+        }
+        return jsonSuc(array_values(array_unique($arrData)));
+    }
+
     protected function _canal($gid)
     {
         $info = \app\ps\model\Canal::get($gid);
@@ -399,6 +484,84 @@ class Index extends Controller
     {
         $mdl = new \app\ps\model\Spout();
         $data = $mdl->distinct(true)->field('river')->select();
+        return $data->toArray();
+    }
+
+    protected function _canal_field()
+    {
+        $mdl = new \app\ps\model\Canal();
+        return $mdl->getTableFields();
+    }
+
+    protected function _comb_field()
+    {
+        $mdl = new \app\ps\model\Comb();
+        return $mdl->getTableFields();
+    }
+
+    protected function _dir_point_field()
+    {
+        $mdl = new \app\ps\model\Dirpoint();
+        return $mdl->getTableFields();
+    }
+
+    protected function _pipe_field()
+    {
+        $mdl = new \app\ps\model\Pipe();
+        return $mdl->getTableFields();
+    }
+
+    protected function _spout_field()
+    {
+        $mdl = new \app\ps\model\Spout();
+        return $mdl->getTableFields();
+    }
+
+    protected function _well_field()
+    {
+        $mdl = new \app\ps\model\Well();
+        return $mdl->getTableFields();
+    }
+
+    protected function _canal_lanway()
+    {
+        $mdl = new \app\ps\model\Canal();
+        $data = $mdl->distinct(true)->field('lane_way')->select();
+        return $data->toArray();
+    }
+
+    protected function _comb_lanway()
+    {
+        $mdl = new \app\ps\model\Comb();
+        $data = $mdl->distinct(true)->field('lane_way')->select();
+        return $data->toArray();
+    }
+
+    protected function _dir_point_lanway()
+    {
+        $mdl = new \app\ps\model\Dirpoint();
+        $data = $mdl->distinct(true)->field('lane_way')->select();
+        return $data->toArray();
+    }
+
+    protected function _pipe_lanway()
+    {
+        $mdl = new \app\ps\model\Pipe();
+        $data = $mdl->distinct(true)->field('lane_way')->select();
+        return $data->toArray();
+    }
+
+    protected function _spout_lanway()
+    {
+        $mdl = new \app\ps\model\Spout();
+        $data = $mdl->distinct(true)->field('lane_way')->select();
+        return $data->toArray();
+    }
+
+    protected function _well_lanway()
+    {
+        $mdl = new \app\ps\model\Well();
+        $data = $mdl->distinct(true)->field('lane_way')->select();
         return $data->toArray();
     }
 

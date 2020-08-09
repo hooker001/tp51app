@@ -12,30 +12,26 @@ class Well extends Model
 
     public function getAll($arrCond)
     {
-        $allowField = ['district', 'subtype', 'material', 'lane_way', 'sort', 'srv', 'geom', 'type'];
-        $arrParam = array_intersect_key($arrCond, array_flip($allowField));
-        if (!$arrParam || count($arrCond) > count($arrParam)) {
-            return [];
-        }
-        if (isset($arrParam['type']) && !in_array(6, $arrParam['type'])) {
+        $arrParam = $this->checkCond($arrCond);
+        if (!$arrParam) {
             return [];
         }
         $model = new self();
         $model = $model->field('gid, st_asgeojson(geom) as geom');
         if (isset($arrParam['district']) && $arrParam['district']) {
-            $model = $model->where('district', 'like', '%' . $arrParam['district'] . '%');
+            $model = $model->where('district', 'in', $arrParam['district']);
         }
         if (isset($arrParam['subtype']) && $arrParam['subtype']) {
-            $model = $model->where('subtype', 'like', '%' . $arrParam['subtype'] . '%');
+            $model = $model->where('subtype', 'in', $arrParam['subtype']);
         }
         if (isset($arrParam['material']) && $arrParam['material']) {
-            $model = $model->where('material', 'like', '%' . $arrParam['material'] . '%');
+            $model = $model->where('material', 'in', $arrParam['material']);
         }
         if (isset($arrParam['lane_way']) && $arrParam['lane_way']) {
-            $model = $model->where('lane_way', 'like', '%' . $arrParam['lane_way'] . '%');
+            $model = $model->where('lane_way', 'in', $arrParam['lane_way']);
         }
         if (isset($arrParam['sort']) && $arrParam['sort']) {
-            $model = $model->where('sort', 'like', '%' . $arrParam['sort'] . '%');
+            $model = $model->where('sort', 'in',  $arrParam['sort']);
         }
         if (isset($arrParam['srv']) && $arrParam['srv']) {
             $model = $model->where('srv', 'like', '%' . $arrParam['srv'] . '%');
@@ -43,6 +39,42 @@ class Well extends Model
         if (isset($arrParam['geom']) && $arrParam['geom']) {
             $model = $model->where("st_contains(st_geomfromgeojson('".$arrParam['geom']."'),geom)");
         }
+        if (isset($arrParam['option']) && $arrParam['option']) {
+            foreach ($arrParam['option'] as $item) {
+                if (!isset($item['f']) || !$item['f'] || !isset($item['o']) || !$item['o'] || !isset($item['v']) || !$item['v']) {
+                    continue;
+                }
+                $val = $item['o'] == 'like' ? '%' . $item['v'] . '%' : $item['v'];
+                if (isset($item['r']) && $item['r'] == 'or') {
+                    $model = $model->whereOr($item['f'], $item['o'], $val);
+                } else {
+                    $model = $model->where($item['f'], $item['o'], $val);
+                }
+            }
+        }
         return $model->order('gid', 'desc')->select()->toArray();
+    }
+
+    //如果存在不属于当前模型的字段，则验证失败
+    protected function checkCond($arrCond)
+    {
+        $fields = $this->getTableFields();
+        $unkownField = false;
+        foreach ($arrCond as $f => $v) {
+            if ($f == 'option') {
+                foreach ($v as $item) {
+                    if (!in_array($item['f'], $fields)) {
+                        $unkownField = true;
+                        break 2;
+                    }
+                }
+            } else {
+                if (!in_array($f, $fields)) {
+                    $unkownField = true;
+                    break;
+                }
+            }
+        }
+        return $unkownField ? false : $arrCond;
     }
 }
