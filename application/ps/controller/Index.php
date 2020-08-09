@@ -173,6 +173,56 @@ class Index extends Controller
         return jsonSuc(array_values(array_unique($arrData)));
     }
 
+    //行政区划数据
+    public function district()
+    {
+        $arrParam = $this->request->get();
+        $arrData = [];
+        if (isset($arrParam['type']) && $arrParam['type']) {
+            $arrType = explode(',', $arrParam['type']);
+            if (in_array(1, $arrType)) {
+                $arrRe = $this->_canal_district();
+                $arrData = array_merge($arrData, array_column($arrRe, 'district'));
+            }
+            if (in_array(2, $arrType)) {
+                $arrRe = $this->_comb_district();
+                $arrData = array_merge($arrData, array_column($arrRe, 'district'));
+            }
+            if (in_array(3, $arrType)) {
+                $arrRe = $this->_dir_point_district();
+                $arrData = array_merge($arrData, array_column($arrRe, 'district'));
+            }
+            if (in_array(4, $arrType)) {
+                $arrRe = $this->_pipe_district();
+                $arrData = array_merge($arrData, array_column($arrRe, 'district'));
+            }
+            if (in_array(5, $arrType)) {
+                $arrRe = $this->_spout_district();
+                $arrData = array_merge($arrData, array_column($arrRe, 'district'));
+            }
+            if (in_array(6, $arrType)) {
+                $arrRe = $this->_well_district();
+                $arrData = array_merge($arrData, array_column($arrRe, 'district'));
+            }
+        }
+        return jsonSuc(array_values(array_unique($arrData)));
+    }
+
+    //流域数据
+    public function river()
+    {
+        $arrParam = $this->request->get();
+        $arrData = [];
+        if (isset($arrParam['type']) && $arrParam['type']) {
+            $arrType = explode(',', $arrParam['type']);
+            if (in_array(5, $arrType)) {
+                $arrRe = $this->_spout_river();
+                $arrData = array_merge($arrData, array_column($arrRe, 'river'));
+            }
+        }
+        return jsonSuc($arrData);
+    }
+
     protected function _canal($gid)
     {
         $info = \app\ps\model\Canal::get($gid);
@@ -300,6 +350,55 @@ class Index extends Controller
     {
         $Mdl = new \app\ps\model\Well();
         $data = $Mdl->distinct(true)->field('sort')->select();
+        return $data->toArray();
+    }
+
+    protected function _canal_district()
+    {
+        $mdl = new \app\ps\model\Canal();
+        $data = $mdl->distinct(true)->field('district')->select();
+        return $data->toArray();
+    }
+
+    protected function _comb_district()
+    {
+        $mdl = new \app\ps\model\Comb();
+        $data = $mdl->distinct(true)->field('district')->select();
+        return $data->toArray();
+    }
+
+    protected function _dir_point_district()
+    {
+        $mdl = new \app\ps\model\Dirpoint();
+        $data = $mdl->distinct(true)->field('district')->select();
+        return $data->toArray();
+    }
+
+    protected function _pipe_district()
+    {
+        $mdl = new \app\ps\model\Pipe();
+        $data = $mdl->distinct(true)->field('district')->select();
+        return $data->toArray();
+    }
+
+    protected function _spout_district()
+    {
+        $mdl = new \app\ps\model\Spout();
+        $data = $mdl->distinct(true)->field('district')->select();
+        return $data->toArray();
+    }
+
+    protected function _well_district()
+    {
+        $mdl = new \app\ps\model\Well();
+        $data = $mdl->distinct(true)->field('district')->select();
+        return $data->toArray();
+    }
+
+    protected function _spout_river()
+    {
+        $mdl = new \app\ps\model\Spout();
+        $data = $mdl->distinct(true)->field('river')->select();
         return $data->toArray();
     }
 

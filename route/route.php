@@ -25,6 +25,8 @@ Route::group('ps', function () {
     Route::get('pipeds', 'ps/index/pipeds');
     Route::get('grade', 'ps/index/grade');
     Route::get('sort', 'ps/index/sort');
+    Route::get('district', 'ps/index/district');
+    Route::get('river', 'ps/index/river');
 
     Route::post('pipe/create', 'ps/pipe/create');
     Route::post('pipe/delete', 'ps/pipe/delete');
