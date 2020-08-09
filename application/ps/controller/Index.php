@@ -85,6 +85,24 @@ class Index extends Controller
 
     }
 
+    public function material()
+    {
+        $arrParam = $this->request->get();
+        $arrData = [];
+        if (isset($arrParam['type']) && $arrParam['type']) {
+            $arrType = explode(',', $arrParam['type']);
+            if (in_array(4, $arrType)) {
+                $arrRe = $this->_pipe_material();
+                $arrData = array_merge($arrData, array_column($arrRe, 'material'));
+            }
+            if (in_array(6, $arrType)) {
+                $arrRe = $this->_well_material();
+                $arrData = array_merge($arrData, array_column($arrRe, 'material'));
+            }
+        }
+        return jsonSuc($arrData);
+    }
+
     protected function _canal($gid)
     {
         $info = \app\ps\model\Canal::get($gid);
@@ -143,6 +161,20 @@ class Index extends Controller
         }
         $strHtml = $this->_tpl($info->toArray());
         return $strHtml;
+    }
+
+    protected function _pipe_material()
+    {
+        $Mdl = new \app\ps\model\Pipe();
+        $data = $Mdl->distinct(true)->field('material')->select();
+        return $data->toArray();
+    }
+
+    protected function _well_material()
+    {
+        $Mdl = new \app\ps\model\Well();
+        $data = $Mdl->distinct(true)->field('material')->select();
+        return $data->toArray();
     }
 
     protected function _tpl($arrData)

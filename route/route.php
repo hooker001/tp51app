@@ -21,6 +21,7 @@ Route::group('ps', function () {
     Route::get('info', 'ps/index/info');
     Route::get('search', 'ps/index/search');
     Route::get('pdf', 'ps/index/pdf');
+    Route::get('material', 'ps/index/material');
     Route::post('pipe/create', 'ps/pipe/create');
     Route::post('pipe/delete', 'ps/pipe/delete');
     Route::get('pipe/info', 'ps/pipe/info');
@@ -51,6 +52,7 @@ Route::group('ps', function () {
     Route::post('pipe/update', 'ps/pipe/update');
     Route::post('spout/update', 'ps/spout/update');
     Route::post('well/update', 'ps/well/update');
+
 })->allowCrossDomain();
 
 Route::miss('ps/index/info');
