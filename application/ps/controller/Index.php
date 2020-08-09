@@ -17,6 +17,7 @@ class Index extends Controller
         return jsonErr('route not found');
     }
 
+    //查询
     public function search()
     {
         $arrParam = $this->request->get();
@@ -46,6 +47,7 @@ class Index extends Controller
         return jsonSuc($arrData);
     }
 
+    //导出pdf
     public function pdf()
     {
         $arrParam = $this->request->get();
@@ -85,6 +87,7 @@ class Index extends Controller
 
     }
 
+    //材料数据
     public function material()
     {
         $arrParam = $this->request->get();
@@ -101,6 +104,73 @@ class Index extends Controller
             }
         }
         return jsonSuc($arrData);
+    }
+
+    //管径数据
+    public function pipeds()
+    {
+        $arrParam = $this->request->get();
+        $arrData = [];
+        if (isset($arrParam['type']) && $arrParam['type']) {
+            $arrType = explode(',', $arrParam['type']);
+            if (in_array(4, $arrType)) {
+                $arrRe = $this->_pipe_ds();
+                $arrRe = array_column($arrRe, 'd_s');
+                sort($arrRe);
+                $arrData = array_merge($arrData, $arrRe);
+            }
+        }
+        return jsonSuc($arrData);
+    }
+
+    //等级数据
+    public function grade()
+    {
+        $arrParam = $this->request->get();
+        $arrData = [];
+        if (isset($arrParam['type']) && $arrParam['type']) {
+            $arrType = explode(',', $arrParam['type']);
+            if (in_array(1, $arrType)) {
+                $arrRe = $this->_canal_grade();
+                $arrData = array_merge($arrData, array_column($arrRe, 'grade'));
+            }
+            if (in_array(4, $arrType)) {
+                $arrRe = $this->_pipe_grade();
+                $arrData = array_merge($arrData, array_column($arrRe, 'grade'));
+            }
+        }
+        return jsonSuc(array_values(array_unique($arrData)));
+    }
+
+    //类别数据
+    public function sort()
+    {
+        $arrParam = $this->request->get();
+        $arrData = [];
+        if (isset($arrParam['type']) && $arrParam['type']) {
+            $arrType = explode(',', $arrParam['type']);
+            if (in_array(1, $arrType)) {
+                $arrRe = $this->_canal_sort();
+                $arrData = array_merge($arrData, array_column($arrRe, 'sort'));
+            }
+            if (in_array(3, $arrType)) {
+                $arrRe = $this->_dir_point_sort();
+                $arrData = array_merge($arrData, array_column($arrRe, 'sort'));
+            }
+            if (in_array(4, $arrType)) {
+                $arrRe = $this->_pipe_sort();
+                $arrData = array_merge($arrData, array_column($arrRe, 'sort'));
+            }
+            if (in_array(5, $arrType)) {
+                $arrRe = $this->_spout_sort();
+                $arrData = array_merge($arrData, array_column($arrRe, 'sort'));
+            }
+            if (in_array(6, $arrType)) {
+                $arrRe = $this->_well_sort();
+                $arrData = array_merge($arrData, array_column($arrRe, 'sort'));
+            }
+        }
+        return jsonSuc(array_values(array_unique($arrData)));
     }
 
     protected function _canal($gid)
@@ -174,6 +244,62 @@ class Index extends Controller
     {
         $Mdl = new \app\ps\model\Well();
         $data = $Mdl->distinct(true)->field('material')->select();
+        return $data->toArray();
+    }
+
+    protected function _pipe_ds()
+    {
+        $Mdl = new \app\ps\model\Pipe();
+        $data = $Mdl->distinct(true)->field('d_s')->select();
+        return $data->toArray();
+    }
+
+    protected function _canal_grade()
+    {
+        $Mdl = new \app\ps\model\Canal();
+        $data = $Mdl->distinct(true)->field('grade')->select();
+        return $data->toArray();
+    }
+
+    protected function _pipe_grade()
+    {
+        $Mdl = new \app\ps\model\Pipe();
+        $data = $Mdl->distinct(true)->field('grade')->select();
+        return $data->toArray();
+    }
+
+    protected function _canal_sort()
+    {
+        $Mdl = new \app\ps\model\Canal();
+        $data = $Mdl->distinct(true)->field('sort')->select();
+        return $data->toArray();
+    }
+
+    protected function _dir_point_sort()
+    {
+        $Mdl = new \app\ps\model\Dirpoint();
+        $data = $Mdl->distinct(true)->field('sort')->select();
+        return $data->toArray();
+    }
+
+    protected function _pipe_sort()
+    {
+        $Mdl = new \app\ps\model\Pipe();
+        $data = $Mdl->distinct(true)->field('sort')->select();
+        return $data->toArray();
+    }
+
+    protected function _spout_sort()
+    {
+        $Mdl = new \app\ps\model\Spout();
+        $data = $Mdl->distinct(true)->field('sort')->select();
+        return $data->toArray();
+    }
+
+    protected function _well_sort()
+    {
+        $Mdl = new \app\ps\model\Well();
+        $data = $Mdl->distinct(true)->field('sort')->select();
         return $data->toArray();
     }
 

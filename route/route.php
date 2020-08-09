@@ -22,6 +22,10 @@ Route::group('ps', function () {
     Route::get('search', 'ps/index/search');
     Route::get('pdf', 'ps/index/pdf');
     Route::get('material', 'ps/index/material');
+    Route::get('pipeds', 'ps/index/pipeds');
+    Route::get('grade', 'ps/index/grade');
+    Route::get('sort', 'ps/index/sort');
+
     Route::post('pipe/create', 'ps/pipe/create');
     Route::post('pipe/delete', 'ps/pipe/delete');
     Route::get('pipe/info', 'ps/pipe/info');
