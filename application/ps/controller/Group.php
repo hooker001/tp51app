@@ -117,6 +117,9 @@ class Group extends Controller
                     ['typeid' => 15, 'name' => '排水管道支管以下'],
                     ['typeid' => 16, 'name' => '排水管道支干管'],
                     ['typeid' => 17, 'name' => '排水管道主干管'],
+                    ['typeid' => 18, 'name' => '排水沟渠干管'],
+                    ['typeid' => 19, 'name' => '排水沟渠主干管'],
+                    ['typeid' => 20, 'name' => '排水管道干管'],
                 ];
                 break;
         }

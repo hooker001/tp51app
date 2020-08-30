@@ -2,10 +2,13 @@
 
 namespace app\ps\controller;
 
+use app\ps\model\Canalzygg;
 use app\ps\model\Canalzyys;
 use app\ps\model\Canalzyzg;
 use app\ps\model\Canalzyzgyx;
 use app\ps\model\Canalzyzhigg;
+use app\ps\model\Canalzyzhugg;
+use app\ps\model\Pipezygg;
 use app\ps\model\Pipezyws;
 use app\ps\model\Pipezyys;
 use app\ps\model\Pipezyywhl;
@@ -120,6 +123,21 @@ class Index extends Controller
         }
         if (in_array(17, $type)) {
             $mdl = new Pipezyzhugg();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        if (in_array(18, $type)) {
+            $mdl = new Canalzygg();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        if (in_array(19, $type)) {
+            $mdl = new Canalzyzhugg();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        if (in_array(20, $type)) {
+            $mdl = new Pipezygg();
             $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
             $arrData = array_merge($arrData, $arrRe);
         }
