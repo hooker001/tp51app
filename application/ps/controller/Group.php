@@ -10,7 +10,7 @@ class Group extends Controller
     public function create()
     {
         $arrPost = $this->request->post();
-        if (!$arrPost) {
+        if (!$arrPost || !isset($arrPost['type']) || !in_array($arrPost['type'], [1, 2, 3])) {
             return jsonErr('缺失入参');
         }
         $mdl = new Mdl();
@@ -48,8 +48,12 @@ class Group extends Controller
     //图层组合数据
     public function all()
     {
+        $type = intval($this->request->get('type'));
+        if (!$type) {
+            return jsonSuc();
+        }
         $mdl = new Mdl();
-        $arrGroup = $mdl->field('gid,name')->select();
+        $arrGroup = $mdl->field('gid,name')->where('type', $type)->select();
         return jsonSuc($arrGroup);
     }
 
@@ -82,31 +86,31 @@ class Group extends Controller
         switch ($type) {
             case 1:
                 $data = [
-                    ['type' => 1, 'name' => '排水沟渠'],
-                    ['type' => 2, 'name' => '雨水口'],
-                    ['type' => 3, 'name' => '管线暗点'],
-                    ['type' => 4, 'name' => '排水管道'],
-                    ['type' => 5, 'name' => '排放口'],
-                    ['type' => 6, 'name' => '窖井'],
+                    ['typeid' => 1, 'name' => '排水沟渠'],
+                    ['typeid' => 2, 'name' => '雨水口'],
+                    ['typeid' => 3, 'name' => '管线暗点'],
+                    ['typeid' => 4, 'name' => '排水管道'],
+                    ['typeid' => 5, 'name' => '排放口'],
+                    ['typeid' => 6, 'name' => '窖井'],
                 ];
                 break;
             case 2:
                 $data = [
-                    ['type' => 7, 'name' => '排水沟渠雨水'],
-                    ['type' => 8, 'name' => '排水管道污水'],
-                    ['type' => 9, 'name' => '排水管道雨水'],
-                    ['type' => 10, 'name' => '排水管道雨污合流'],
+                    ['typeid' => 7, 'name' => '排水沟渠雨水'],
+                    ['typeid' => 8, 'name' => '排水管道污水'],
+                    ['typeid' => 9, 'name' => '排水管道雨水'],
+                    ['typeid' => 10, 'name' => '排水管道雨污合流'],
                 ];
                 break;
             case 3:
                 $data = [
-                    ['type' => 11, 'name' => '排水沟渠支管'],
-                    ['type' => 12, 'name' => '排水沟渠支管以下'],
-                    ['type' => 13, 'name' => '排水沟渠支干管'],
-                    ['type' => 14, 'name' => '排水管道支管'],
-                    ['type' => 15, 'name' => '排水管道支管以下'],
-                    ['type' => 16, 'name' => '排水管道支干管'],
-                    ['type' => 17, 'name' => '排水管道主干管'],
+                    ['typeid' => 11, 'name' => '排水沟渠支管'],
+                    ['typeid' => 12, 'name' => '排水沟渠支管以下'],
+                    ['typeid' => 13, 'name' => '排水沟渠支干管'],
+                    ['typeid' => 14, 'name' => '排水管道支管'],
+                    ['typeid' => 15, 'name' => '排水管道支管以下'],
+                    ['typeid' => 16, 'name' => '排水管道支干管'],
+                    ['typeid' => 17, 'name' => '排水管道主干管'],
                 ];
                 break;
         }
