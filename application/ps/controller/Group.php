@@ -23,7 +23,7 @@ class Group extends Controller
         $id = intval($this->request->get('id'));
         $group = Mdl::get($id);
         if (!$group) {
-            jsonErr('数据不存在');
+            return jsonErr('数据不存在');
         }
         $arrPost = $this->request->post();
         $group->save($arrPost);
