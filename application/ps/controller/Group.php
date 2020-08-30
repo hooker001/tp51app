@@ -47,7 +47,8 @@ class Group extends Controller
     public function info()
     {
         $id = intval($this->request->get('id'));
-        $group = Mdl::get($id);
+        $group = Mdl::get($id)->toArray();
+        $group['layers'] = json_decode($group['layers'], true);
         return jsonSuc($group);
     }
 
