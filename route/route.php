@@ -60,6 +60,13 @@ Route::group('ps', function () {
     Route::post('pipe/update', 'ps/pipe/update');
     Route::post('spout/update', 'ps/spout/update');
     Route::post('well/update', 'ps/well/update');
+    //图层组合
+    Route::get('group/layers', 'ps/group/layers');
+    Route::post('group/create', 'ps/group/create');
+    Route::post('group/update', 'ps/group/update');
+    Route::post('group/delete', 'ps/group/delete');
+    Route::get('group/info', 'ps/group/info');
+    Route::get('group/all', 'ps/group/all');
 
 })->allowCrossDomain();
 
