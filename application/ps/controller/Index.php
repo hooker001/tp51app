@@ -2,6 +2,17 @@
 
 namespace app\ps\controller;
 
+use app\ps\model\Canalzyys;
+use app\ps\model\Canalzyzg;
+use app\ps\model\Canalzyzgyx;
+use app\ps\model\Canalzyzhigg;
+use app\ps\model\Pipezyws;
+use app\ps\model\Pipezyys;
+use app\ps\model\Pipezyywhl;
+use app\ps\model\Pipezyzg;
+use app\ps\model\Pipezyzgyx;
+use app\ps\model\Pipezyzhigg;
+use app\ps\model\Pipezyzhugg;
 use TCPDF;
 use think\Controller;
 
@@ -15,6 +26,130 @@ class Index extends Controller
     public function info()
     {
         return jsonErr('route not found');
+    }
+
+    //管线图层数据
+    public function searchType1()
+    {
+        $arrParam = $this->request->get();
+        $type = [];
+        if (isset($arrParam['type']) && is_string($arrParam['type'])) {
+            $type = explode(',', $arrParam['type']);
+        }
+        unset($arrParam['type']);
+        $arrData = [];
+        if (in_array(1, $type)) {
+            $canalMdl = new \app\ps\model\Canal();
+            $arrCanal = $canalMdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrCanal);
+        }
+        if (in_array(2, $type)) {
+            $combMdl = new \app\ps\model\Comb();
+            $arrComb = $combMdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrComb);
+        }
+        if (in_array(3, $type)) {
+            $dirpointMdl = new \app\ps\model\Dirpoint();
+            $arrDp = $dirpointMdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrDp);
+        }
+        if (in_array(4, $type)) {
+            $pipeMdl = new \app\ps\model\Pipe();
+            $arrPipe = $pipeMdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrPipe);
+        }
+        if (in_array(5, $type)) {
+            $spoutMdl = new \app\ps\model\Spout();
+            $arrSpout = $spoutMdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrSpout);
+        }
+        if (in_array(6, $type)) {
+            $wellMdl = new \app\ps\model\Well();
+            $arrWell = $wellMdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrWell);
+        }
+        return jsonSuc($arrData);
+    }
+
+    //排水图层数据
+    public function searchType2()
+    {
+        $arrParam = $this->request->get();
+        $type = [];
+        if (isset($arrParam['type']) && is_string($arrParam['type'])) {
+            $type = explode(',', $arrParam['type']);
+        }
+        unset($arrParam['type']);
+        $arrData = [];
+        if (in_array(7, $type)) {
+            $mdl = new Canalzyys();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        if (in_array(8, $type)) {
+            $mdl = new Pipezyws();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        if (in_array(9, $type)) {
+            $mdl = new Pipezyys();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        if (in_array(10, $type)) {
+            $mdl = new Pipezyywhl();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        return jsonSuc($arrData);
+    }
+
+    //管道图层数据
+    public function searchType3()
+    {
+        $arrParam = $this->request->get();
+        $type = [];
+        if (isset($arrParam['type']) && is_string($arrParam['type'])) {
+            $type = explode(',', $arrParam['type']);
+        }
+        unset($arrParam['type']);
+        $arrData = [];
+        if (in_array(11, $type)) {
+            $mdl = new Canalzyzg();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        if (in_array(12, $type)) {
+            $mdl = new Canalzyzgyx();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        if (in_array(13, $type)) {
+            $mdl = new Canalzyzhigg();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        if (in_array(14, $type)) {
+            $mdl = new Pipezyzg();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        if (in_array(15, $type)) {
+            $mdl = new Pipezyzgyx();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        if (in_array(16, $type)) {
+            $mdl = new Pipezyzhigg();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        if (in_array(17, $type)) {
+            $mdl = new Pipezyzhugg();
+            $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrRe);
+        }
+        return jsonSuc($arrData);
     }
 
     //查询

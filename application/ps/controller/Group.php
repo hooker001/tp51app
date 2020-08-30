@@ -13,6 +13,9 @@ class Group extends Controller
         if (!$arrPost || !isset($arrPost['type']) || !in_array($arrPost['type'], [1, 2, 3])) {
             return jsonErr('缺失入参');
         }
+        if (isset($arrPost['layers']) && is_array($arrPost['layers'])) {
+            $arrPost['layers'] = json_encode($arrPost['layers']);
+        }
         $mdl = new Mdl();
         $mdl->save($arrPost);
         return jsonSuc(['id' => $mdl->gid]);
@@ -26,6 +29,9 @@ class Group extends Controller
             return jsonErr('数据不存在');
         }
         $arrPost = $this->request->post();
+        if (isset($arrPost['layers']) && is_array($arrPost['layers'])) {
+            $arrPost['layers'] = json_encode($arrPost['layers']);
+        }
         $group->save($arrPost);
         return jsonSuc([]);
     }

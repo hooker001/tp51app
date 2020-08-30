@@ -67,6 +67,9 @@ Route::group('ps', function () {
     Route::post('group/delete', 'ps/group/delete');
     Route::get('group/info', 'ps/group/info');
     Route::get('group/all', 'ps/group/all');
+    Route::get('searchType1', 'ps/index/searchType1');
+    Route::get('searchType2', 'ps/index/searchType2');
+    Route::get('searchType3', 'ps/index/searchType3');
 
 })->allowCrossDomain();
 
