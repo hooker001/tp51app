@@ -28,8 +28,8 @@ class Index extends Controller
         return jsonErr('route not found');
     }
 
-    //管线图层数据
-    public function searchType1()
+    //图层组合查询
+    public function searchType()
     {
         $arrParam = $this->request->get();
         $type = [];
@@ -68,19 +68,6 @@ class Index extends Controller
             $arrWell = $wellMdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
             $arrData = array_merge($arrData, $arrWell);
         }
-        return jsonSuc($arrData);
-    }
-
-    //排水图层数据
-    public function searchType2()
-    {
-        $arrParam = $this->request->get();
-        $type = [];
-        if (isset($arrParam['type']) && is_string($arrParam['type'])) {
-            $type = explode(',', $arrParam['type']);
-        }
-        unset($arrParam['type']);
-        $arrData = [];
         if (in_array(7, $type)) {
             $mdl = new Canalzyys();
             $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
@@ -101,19 +88,6 @@ class Index extends Controller
             $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
             $arrData = array_merge($arrData, $arrRe);
         }
-        return jsonSuc($arrData);
-    }
-
-    //管道图层数据
-    public function searchType3()
-    {
-        $arrParam = $this->request->get();
-        $type = [];
-        if (isset($arrParam['type']) && is_string($arrParam['type'])) {
-            $type = explode(',', $arrParam['type']);
-        }
-        unset($arrParam['type']);
-        $arrData = [];
         if (in_array(11, $type)) {
             $mdl = new Canalzyzg();
             $arrRe = $mdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
