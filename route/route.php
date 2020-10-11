@@ -73,7 +73,7 @@ Route::group('ps', function () {
 
 Route::group('qy',function () {
     Route::post('pipe/create', 'qy/pipe/create');
-    Route::post('pipe/update', 'ps/pipe/update');
+    Route::post('pipe/update', 'qy/pipe/update');
     Route::get('pipe/info', 'qy/pipe/info');
 })->allowCrossDomain();
 
