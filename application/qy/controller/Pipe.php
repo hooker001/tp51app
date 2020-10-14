@@ -32,7 +32,7 @@ class Pipe extends Controller
             $id = $model->gid;
 //        $strId = str_pad($id, 6, '0', STR_PAD_LEFT);
 //        $usid .= $strId;
-            $sql = "update ps_pipe_zy set geom=st_geomfromgeojson('$geom') where gid=" . $id;
+            $sql = "update qy_pipe_zy set geom=st_geomfromgeojson('$geom') where gid=" . $id;
             Db::execute($sql);
         }
         return jsonSuc();
@@ -88,7 +88,7 @@ class Pipe extends Controller
         $mdl = new Mdl();
         $mdl->save($data, ['gid' => $id]);
         if ($geom) {
-            $sql = "update ps_pipe_zy set geom=st_geomfromgeojson('$geom') where gid=" . $id;
+            $sql = "update qy_pipe_zy set geom=st_geomfromgeojson('$geom') where gid=" . $id;
             Db::execute($sql);
         }
         return jsonSuc();
