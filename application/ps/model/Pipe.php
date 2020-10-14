@@ -103,7 +103,7 @@ class Pipe extends Model
         if (isset($arrParam['d_s']) && $arrParam['d_s']) {
             $model = $model->where('d_s', $arrParam['d_s']);
         }
-        return $model->order('id', 'desc')->select()->toArray();
+        return $model->order('gid', 'desc')->select()->toArray();
     }
 
     //如果存在不属于当前模型的字段，则验证失败

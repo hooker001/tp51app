@@ -75,6 +75,7 @@ Route::group('qy',function () {
     Route::post('pipe/create', 'qy/pipe/create');
     Route::post('pipe/update', 'qy/pipe/update');
     Route::get('pipe/info', 'qy/pipe/info');
+    Route::get('pipe/lists', 'qy/pipe/lists');
 })->allowCrossDomain();
 
 Route::miss('ps/index/info');
