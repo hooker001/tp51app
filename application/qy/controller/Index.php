@@ -20,11 +20,11 @@ class Index extends Controller
         }
         unset($arrParam['type']);
         $arrData = [];
-//        if (in_array(1, $type)) {
-//            $canalMdl = new \app\ps\model\Canal();
-//            $arrCanal = $canalMdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
-//            $arrData = array_merge($arrData, $arrCanal);
-//        }
+        if (in_array(1, $type)) {
+            $canalMdl = new \app\qy\model\Canal();
+            $arrCanal = $canalMdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();
+            $arrData = array_merge($arrData, $arrCanal);
+        }
 //        if (in_array(2, $type)) {
 //            $combMdl = new \app\ps\model\Comb();
 //            $arrComb = $combMdl->field('gid, layers, st_asgeojson(geom) as geom')->select()->toArray();

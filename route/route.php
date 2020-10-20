@@ -78,6 +78,10 @@ Route::group('qy',function () {
     Route::post('pipe/create', 'qy/pipe/create');
     Route::post('pipe/update', 'qy/pipe/update');
     Route::get('pipe/info', 'qy/pipe/info');
+    Route::post('canal/create', 'qy/canal/create');
+    Route::post('canal/delete', 'qy/canal/delete');
+    Route::get('canal/info', 'qy/canal/info');
+    Route::post('canel/update', 'qy/canal/update');
 })->allowCrossDomain();
 
 Route::miss('ps/index/info');
