@@ -8,6 +8,9 @@ use app\ps\model\Prepro as Mdl;
 
 class Prepro extends Controller
 {
+    /**
+     * @var string 当前控制器未使用
+     */
     protected $fcode = '060305';
 
     public function create()

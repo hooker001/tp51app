@@ -54,7 +54,7 @@ Route::group('ps', function () {
 //    Route::post('prepro/create', 'ps/prepro/create');
 //    Route::post('prepro/delete', 'ps/prepro/delete');
 //    Route::get('prepro/info', 'ps/prepro/info');
-    Route::post('canel/update', 'ps/canal/update');
+    Route::post('canal/update', 'ps/canal/update');
     Route::post('comb/update', 'ps/comb/update');
     Route::post('dirpoint/update', 'ps/dirpoint/update');
     Route::post('pipe/update', 'ps/pipe/update');
@@ -68,6 +68,36 @@ Route::group('ps', function () {
     Route::get('group/info', 'ps/group/info');
     Route::get('group/all', 'ps/group/all');
     Route::get('searchType', 'ps/index/searchType');
+    // 第三版需求属性编辑
+    Route::get('canal/fields', 'ps/canal/allFields');
+    Route::post('canal/addfield', 'ps/canal/addField');
+    Route::post('canal/altfield', 'ps/canal/updateField');
+    Route::post('canal/delfield', 'ps/canal/deleteField');
+
+    Route::get('comb/fields', 'ps/canal/allFields');
+    Route::post('comb/addfield', 'ps/canal/addField');
+    Route::post('comb/altfield', 'ps/canal/updateField');
+    Route::post('comb/delfield', 'ps/canal/deleteField');
+
+    Route::get('dirpoint/fields', 'ps/canal/allFields');
+    Route::post('dirpoint/addfield', 'ps/canal/addField');
+    Route::post('dirpoint/altfield', 'ps/canal/updateField');
+    Route::post('dirpoint/delfield', 'ps/canal/deleteField');
+
+    Route::get('pipe/fields', 'ps/canal/allFields');
+    Route::post('pipe/addfield', 'ps/canal/addField');
+    Route::post('pipe/altfield', 'ps/canal/updateField');
+    Route::post('pipe/delfield', 'ps/canal/deleteField');
+
+    Route::get('spout/fields', 'ps/canal/allFields');
+    Route::post('spout/addfield', 'ps/canal/addField');
+    Route::post('spout/altfield', 'ps/canal/updateField');
+    Route::post('spout/delfield', 'ps/canal/deleteField');
+
+    Route::get('well/fields', 'ps/canal/allFields');
+    Route::post('well/addfield', 'ps/canal/addField');
+    Route::post('well/altfield', 'ps/canal/updateField');
+    Route::post('well/delfield', 'ps/canal/deleteField');
 
 })->allowCrossDomain();
 
@@ -82,6 +112,17 @@ Route::group('qy',function () {
     Route::post('canal/delete', 'qy/canal/delete');
     Route::get('canal/info', 'qy/canal/info');
     Route::post('canel/update', 'qy/canal/update');
+
+    // 第三版需求
+    Route::get('canal/fields', 'qy/canal/allFields');
+    Route::post('canal/addfield', 'qy/canal/addField');
+    Route::post('canal/altfield', 'qy/canal/updateField');
+    Route::post('canal/delfield', 'qy/canal/deleteField');
+    Route::get('pipe/fields', 'qy/canal/allFields');
+    Route::post('pipe/addfield', 'qy/canal/addField');
+    Route::post('pipe/altfield', 'qy/canal/updateField');
+    Route::post('pipe/delfield', 'qy/canal/deleteField');
+
 })->allowCrossDomain();
 
 Route::miss('ps/index/info');

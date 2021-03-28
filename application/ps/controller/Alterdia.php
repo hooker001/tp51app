@@ -8,6 +8,9 @@ use app\ps\model\Alterdia as Mdl;
 
 class Alterdia extends Controller
 {
+    /**
+     * @var string 当前控制器未使用
+     */
     protected $fcode = '060207';
 
     public function create()
