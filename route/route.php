@@ -74,30 +74,30 @@ Route::group('ps', function () {
     Route::post('canal/altfield', 'ps/canal/updateField');
     Route::post('canal/delfield', 'ps/canal/deleteField');
 
-    Route::get('comb/fields', 'ps/canal/allFields');
-    Route::post('comb/addfield', 'ps/canal/addField');
-    Route::post('comb/altfield', 'ps/canal/updateField');
-    Route::post('comb/delfield', 'ps/canal/deleteField');
+    Route::get('comb/fields', 'ps/comb/allFields');
+    Route::post('comb/addfield', 'ps/comb/addField');
+    Route::post('comb/altfield', 'ps/comb/updateField');
+    Route::post('comb/delfield', 'ps/comb/deleteField');
 
-    Route::get('dirpoint/fields', 'ps/canal/allFields');
-    Route::post('dirpoint/addfield', 'ps/canal/addField');
-    Route::post('dirpoint/altfield', 'ps/canal/updateField');
-    Route::post('dirpoint/delfield', 'ps/canal/deleteField');
+    Route::get('dirpoint/fields', 'ps/dirpoint/allFields');
+    Route::post('dirpoint/addfield', 'ps/dirpoint/addField');
+    Route::post('dirpoint/altfield', 'ps/dirpoint/updateField');
+    Route::post('dirpoint/delfield', 'ps/dirpoint/deleteField');
 
-    Route::get('pipe/fields', 'ps/canal/allFields');
-    Route::post('pipe/addfield', 'ps/canal/addField');
-    Route::post('pipe/altfield', 'ps/canal/updateField');
-    Route::post('pipe/delfield', 'ps/canal/deleteField');
+    Route::get('pipe/fields', 'ps/pipe/allFields');
+    Route::post('pipe/addfield', 'ps/pipe/addField');
+    Route::post('pipe/altfield', 'ps/pipe/updateField');
+    Route::post('pipe/delfield', 'ps/pipe/deleteField');
 
-    Route::get('spout/fields', 'ps/canal/allFields');
-    Route::post('spout/addfield', 'ps/canal/addField');
-    Route::post('spout/altfield', 'ps/canal/updateField');
-    Route::post('spout/delfield', 'ps/canal/deleteField');
+    Route::get('spout/fields', 'ps/spout/allFields');
+    Route::post('spout/addfield', 'ps/spout/addField');
+    Route::post('spout/altfield', 'ps/spout/updateField');
+    Route::post('spout/delfield', 'ps/spout/deleteField');
 
-    Route::get('well/fields', 'ps/canal/allFields');
-    Route::post('well/addfield', 'ps/canal/addField');
-    Route::post('well/altfield', 'ps/canal/updateField');
-    Route::post('well/delfield', 'ps/canal/deleteField');
+    Route::get('well/fields', 'ps/well/allFields');
+    Route::post('well/addfield', 'ps/well/addField');
+    Route::post('well/altfield', 'ps/well/updateField');
+    Route::post('well/delfield', 'ps/well/deleteField');
 
 })->allowCrossDomain();
 
@@ -118,10 +118,10 @@ Route::group('qy',function () {
     Route::post('canal/addfield', 'qy/canal/addField');
     Route::post('canal/altfield', 'qy/canal/updateField');
     Route::post('canal/delfield', 'qy/canal/deleteField');
-    Route::get('pipe/fields', 'qy/canal/allFields');
-    Route::post('pipe/addfield', 'qy/canal/addField');
-    Route::post('pipe/altfield', 'qy/canal/updateField');
-    Route::post('pipe/delfield', 'qy/canal/deleteField');
+    Route::get('pipe/fields', 'qy/pipe/allFields');
+    Route::post('pipe/addfield', 'qy/pipe/addField');
+    Route::post('pipe/altfield', 'qy/pipe/updateField');
+    Route::post('pipe/delfield', 'qy/pipe/deleteField');
 
 })->allowCrossDomain();
 

@@ -188,6 +188,19 @@ class Dirpoint extends Controller
         $model = new Mdl();
         $tableName = $model->getTable();
         $fieldName = $arrForm['field_name'];
+        $oriName = '';
+        $arrFieldName = explode(':', $fieldName);
+        $isRename = false;
+        if (count($arrFieldName)==2) {
+            $oriName = $arrFieldName[0];
+            $fieldName = $arrFieldName[1];
+            if ($oriName != $fieldName) {
+                $isRename = true;
+            }
+        }
+        if ($isRename) {
+            $renameSql = "ALTER TABLE public.{$tableName} RENAME COLUMN {$oriName} TO {$fieldName}";
+        }
         if ($fieldType == 'varchar') {
             $fieldType = $fieldType."({$arrForm['field_length']})";
         }
@@ -196,17 +209,26 @@ class Dirpoint extends Controller
 
         $extModel = new Field();
         $extTable = $extModel->getTable();
-        $ext = $extModel->where(['field_table' => $tableName, 'field_name' => $fieldName])->find();
+        $colName = $isRename ? $oriName : $fieldName;
+        $ext = $extModel->where(['field_table' => $tableName, 'field_name' => $colName])->find();
         if ($ext) {
-            unset($arrForm['field_name']);
+            if ($isRename) {
+                $arrForm['field_name'] = $fieldName;
+            } else {
+                unset($arrForm['field_name']);
+            }
         } else {
+            $arrForm['field_name'] = $fieldName;
             $arrForm['field_table'] = $tableName;
         }
         Db::startTrans();
         try {
+            if (isset($renameSql)) {
+                Db::execute($renameSql);
+            }
             Db::execute($sql);
             if ($ext) {
-                Db::name($extTable)->where(['field_table' => $tableName, 'field_name' => $fieldName])->update($arrForm);
+                Db::name($extTable)->where(['field_table' => $tableName, 'field_name' => $colName])->update($arrForm);
             } else {
                 Db::name($extTable)->insert($arrForm);
             }
