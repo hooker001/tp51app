@@ -96,6 +96,10 @@ class Spout extends Controller
         $tableName = $model->getTable();
         $systemField = 'column_name,data_type,character_maximum_length,numeric_precision,udt_name';
         $sql = "select {$systemField} from information_schema.columns where table_schema='public' and table_name='{$tableName}'";
+        $arrGet = $this->request->get();
+        if (isset($arrGet['field_name']) && $arrGet['field_name']) {
+            $sql .= " and column_name like '%{$arrGet['field_name']}%'";
+        }
         $fields = Db::query($sql);
         // 获取编辑后的数据长度
         $localFields = Field::where('field_table', $tableName)->select()->toArray();
