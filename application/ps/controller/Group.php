@@ -16,7 +16,14 @@ class Group extends Controller
         if (isset($arrPost['layers']) && is_array($arrPost['layers'])) {
             $arrPost['layers'] = json_encode($arrPost['layers']);
         }
+        if (!isset($arrPost['name']) || empty($arrPost['name'])) {
+            return jsonErr('名称不能为空');
+        }
         $mdl = new Mdl();
+        $group = $mdl->where('name', $arrPost['name'])->find()->toArray();
+        if ($group) {
+            return jsonErr('名称重复');
+        }
         $mdl->save($arrPost);
         return jsonSuc(['id' => $mdl->gid]);
     }
