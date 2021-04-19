@@ -20,7 +20,8 @@ class Group extends Controller
             return jsonErr('名称不能为空');
         }
         $mdl = new Mdl();
-        $group = $mdl->where('name', $arrPost['name'])->find()->toArray();
+        $group = $mdl->where('name', $arrPost['name'])->find();
+        // is_object($group) && $group->toArray();
         if ($group) {
             return jsonErr('名称重复');
         }
