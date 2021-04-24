@@ -233,6 +233,7 @@ class Index extends Controller
 
     /**
      * 全部材料
+     * @return array
      */
     public function material()
     {
