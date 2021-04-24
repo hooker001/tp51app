@@ -231,7 +231,9 @@ class Index extends Controller
 
     }
 
-    //材料数据
+    /**
+     * 全部材料
+     */
     public function material()
     {
         $arrParam = $this->request->get();
